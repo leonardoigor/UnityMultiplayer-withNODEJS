@@ -333,11 +333,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25edd8700ad7a3044b17eb3d54ba3cda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 1052504024898509279, guid: ac466042269996749a50865099c23157,
-    type: 3}
+  playerPrefab: {fileID: 18, guid: ac466042269996749a50865099c23157, type: 3}
   spawn: {fileID: 23045482}
   CurrentPlayer: 
   playerComponent: {fileID: 0}
+  BulletPrefab: {fileID: 8039994626541666959, guid: 8e0dbe96ca0ba3449ab79cd23bfe052d,
+    type: 3}
+  test: 
 --- !u!4 &526469299
 Transform:
   m_ObjectHideFlags: 0
@@ -373,6 +375,17 @@ MonoBehaviour:
   ID: 
   CurrentLife: 0
   PosLife: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 2048
+  AttackSpeed: 1
+  delay: 0
+  Damage: 0
+  camera: {fileID: 0}
+  TargetEnemie: {fileID: 0}
+  enemieController: {fileID: 0}
+  bullet: {fileID: 8039994626541666959, guid: 8e0dbe96ca0ba3449ab79cd23bfe052d, type: 3}
+  shooter: {fileID: 0}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,8 +461,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_LocalRotation: {x: 0.0893533, y: 0.8889874, z: -0.4037444, w: 0.19674322}
-  m_LocalPosition: {x: -24.9208, y: 36.578728, z: 31.106016}
+  m_LocalRotation: {x: 0.029588062, y: 0.9615129, z: -0.24788208, w: 0.11476931}
+  m_LocalPosition: {x: -12.325621, y: 20.274399, z: 29.05214}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 961089265}
@@ -1183,7 +1196,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1715877589
 MonoBehaviour:
   m_ObjectHideFlags: 0

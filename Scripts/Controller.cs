@@ -12,6 +12,8 @@ public class Controller : MonoBehaviour
   public Transform spawn;
   public string CurrentPlayer;
   public Player playerComponent;
+  public GameObject BulletPrefab;
+  public string test;
 
   void Start()
   {
@@ -23,6 +25,7 @@ public class Controller : MonoBehaviour
     socket.On("LifeChange", OnLifeChange);
     socket.On("destroi", Ondestroi);
     socket.On("Current", OnCurrent);
+    socket.On("SpawnBullet", OnSpawnBullet);
     playerComponent = this.GetComponent<Player>();
   }
 
@@ -114,7 +117,7 @@ public class Controller : MonoBehaviour
   public void Onmove(SocketIOEvent data)
   {
     var nome = JsonToString("id", data);
-    Debug.Log(nome);
+    // Debug.Log(nome);
     // POsition
     var p_x = JsonToString("p_x", data);
     var p_y = JsonToString("p_y", data);
@@ -156,6 +159,56 @@ public class Controller : MonoBehaviour
     GameObject ChangelifePlaye = GameObject.Find(id) as GameObject;
     PlayerController contP = ChangelifePlaye.GetComponent<PlayerController>();
     contP.setLife(float.Parse(life));
+  }
+  public void SpawnBullet(Vector3 position, Vector3 shooter, string id)
+  {
+    Dictionary<string, string> data = new Dictionary<string, string>();
+    data["id"] = id;
+    data["p_x"] = position.x.ToString();
+    data["p_y"] = position.y.ToString();
+    data["p_z"] = position.z.ToString();
+    data["shooter_x"] = shooter.x.ToString();
+    data["shooter_y"] = shooter.y.ToString();
+    data["shooter_z"] = shooter.z.ToString();
+    socket.Emit("SpawnBullet", new JSONObject(data));
+  }
+  public void OnBulletMove(Vector3 position, string id)
+  {
+    Dictionary<string, string> data = new Dictionary<string, string>();
+    data["id"] = id;
+    data["p_x"] = position.x.ToString();
+    data["p_y"] = position.y.ToString();
+    data["p_z"] = position.z.ToString();
+    socket.Emit("MovenBullet", new JSONObject(data));
+  }
+  public void OnBullerDie(string id)
+  {
+    Dictionary<string, string> data = new Dictionary<string, string>();
+    data["id"] = id;
+    socket.Emit("destroyBullet", new JSONObject(data));
+  }
+
+  public void OnSpawnBullet(SocketIOEvent evt)
+  {
+    string idB = JsonToString("id", evt);
+    string p_x = JsonToString("p_x", evt);
+    string p_y = JsonToString("p_y", evt);
+    string p_z = JsonToString("p_z", evt);
+    string shooter_x = JsonToString("shooter_x", evt);
+    string shooter_y = JsonToString("shooter_y", evt);
+    string shooter_z = JsonToString("shooter_z", evt);
+
+    Vector3 shootPosition = new Vector3(float.Parse(shooter_x), float.Parse(shooter_y), float.Parse(shooter_z));
+    Vector3 BulletVect = new Vector3(float.Parse(p_x), float.Parse(p_y), float.Parse(p_z));
+
+    BulletPrefab.transform.position = BulletVect;
+
+    GameObject BulletSpawl = Instantiate(BulletPrefab, shootPosition, Quaternion.identity);
+    BulletSpawl.name = idB + "_bullet";
+    BulletController bulletControl = BulletSpawl.GetComponent<BulletController>();
+    Transform targetnew = GameObject.Find(idB).GetComponent<Transform>();
+    bulletControl.bulletMove(targetnew);
+
   }
 
 

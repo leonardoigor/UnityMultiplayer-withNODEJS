@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
   public Quaternion POSRotation;
   public Controller controller;
   public bool isCurrent;
+  public Transform shooter;
   void Start()
   {
     currentPosition = this.transform.position;
@@ -37,7 +38,6 @@ public class PlayerController : MonoBehaviour
     lifeBar = this.GetComponentInChildren<Slider>();
     lifeBar.maxValue = Life;
     LookCamera = GameObject.Find("Look at camera").transform;
-
   }
 
   // Update is called once per frame

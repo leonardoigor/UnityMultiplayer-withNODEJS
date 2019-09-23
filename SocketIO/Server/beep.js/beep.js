@@ -4,6 +4,9 @@ var io = require("socket.io")({
 
 io.attach(4567);
 var players = [];
+var bullets = [];
+var numberBullets;
+var contagem = 0;
 io.on("connection", function(socket) {
   console.log("alguem entrou");
   var currentPlayer = [];
@@ -56,6 +59,20 @@ io.on("connection", function(socket) {
         socket.emit("LifeChange", data);
       }
     }
+  });
+  socket.on("SpawnBullet", data => {
+    numberBullets = contagem.toString();
+    // bullets.push(newBulletObj);
+    // contagem++;
+    console.log("-------------------------------------");
+    console.log(data);
+    socket.broadcast.emit("SpawnBullet", data);
+  });
+  socket.on("MovenBullet", data => {
+    // console.log(data);
+  });
+  socket.on("destroyBullet", data => {
+    // console.log(data);
   });
 
   socket.on("disconnect", () => {
